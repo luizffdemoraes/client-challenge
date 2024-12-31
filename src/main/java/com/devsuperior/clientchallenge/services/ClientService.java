@@ -32,4 +32,16 @@ public class ClientService {
         Client client = repository.save(new Client(clientDTO));
         return new ClientDTO(client);
     }
+
+    @Transactional
+    public ClientDTO update(Long id, ClientDTO clientDTO) {
+        try {
+            Client client = repository.getReferenceById(id);
+            client.updateFromDTO(clientDTO);
+            client = repository.save(client);
+            return new ClientDTO(client);
+        } catch (Exception e) {
+            throw new RuntimeException("Recurso não encontrado");
+        }
+    }
 }

@@ -42,6 +42,14 @@ public class Client {
         this.children = clientDTO.children();
     }
 
+    public void updateFromDTO(ClientDTO clientDTO) {
+        this.name = clientDTO.name();
+        this.cpf = clientDTO.cpf();
+        this.income = clientDTO.income();
+        this.birthDate = clientDTO.birthDate();
+        this.children = clientDTO.children();
+    }
+
     public Long getId() {
         return id;
     }

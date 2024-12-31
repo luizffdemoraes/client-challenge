@@ -34,4 +34,11 @@ public class ClientController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.id()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody ClientDTO clientDTO) throws Exception {
+        ClientDTO dto = service.update(id, clientDTO);
+        return ResponseEntity.ok(dto);
+    }
+
 }
