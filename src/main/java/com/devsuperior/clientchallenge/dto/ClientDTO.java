@@ -13,11 +13,11 @@ public record ClientDTO(
 
     public ClientDTO(Client client) {
         this(
-                client.name(),
-                client.cpf(),
-                client.income(),
-                client.birthDate(),
-                client.children()
+                client.getName(),
+                client.getCpf(),
+                client.getIncome(),
+                client.getBirthDate(),
+                client.getChildren()
         );
     }
 }
