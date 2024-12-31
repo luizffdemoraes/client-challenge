@@ -27,6 +27,7 @@ public class ClientService {
         return clientPage.map(x -> new ClientDTO(x));
     }
 
+    @Transactional
     public ClientDTO insert(ClientDTO clientDTO) {
         Client client = repository.save(new Client(clientDTO));
         return new ClientDTO(client);
