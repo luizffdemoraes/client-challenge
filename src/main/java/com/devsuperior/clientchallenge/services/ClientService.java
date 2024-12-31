@@ -3,6 +3,8 @@ package com.devsuperior.clientchallenge.services;
 import com.devsuperior.clientchallenge.dto.ClientDTO;
 import com.devsuperior.clientchallenge.entities.Client;
 import com.devsuperior.clientchallenge.repositories.ClientRepository;
+import com.devsuperior.clientchallenge.services.exceptions.DatabaseException;
+import com.devsuperior.clientchallenge.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +20,7 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) throws Exception {
-        Client client = repository.findById(id).orElseThrow(() -> new Exception("Recurso não encontrado"));
+        Client client = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
         return new ClientDTO(client);
     }
 
@@ -42,16 +44,19 @@ public class ClientService {
             client = repository.save(client);
             return new ClientDTO(client);
         } catch (Exception e) {
-            throw new RuntimeException("Recurso não encontrado");
+            throw new ResourceNotFoundException("Resource not found");
         }
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
         try {
             repository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Falha de integridade referencial");
+            throw new DatabaseException("Referential integrity failure");
         }
     }
 }
