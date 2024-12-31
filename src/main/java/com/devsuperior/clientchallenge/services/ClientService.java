@@ -17,13 +17,18 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) throws Exception {
-       Client client = repository.findById(id).orElseThrow(() -> new Exception("Recurso não encontrado"));
-       return new ClientDTO(client);
+        Client client = repository.findById(id).orElseThrow(() -> new Exception("Recurso não encontrado"));
+        return new ClientDTO(client);
     }
 
     @Transactional(readOnly = true)
     public Page<ClientDTO> findAll(Pageable pageable) {
         Page<Client> clientPage = repository.findAll(pageable);
         return clientPage.map(x -> new ClientDTO(x));
+    }
+
+    public ClientDTO insert(ClientDTO clientDTO) {
+        Client client = repository.save(new Client(clientDTO));
+        return new ClientDTO(client);
     }
 }

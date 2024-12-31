@@ -1,5 +1,6 @@
 package com.devsuperior.clientchallenge.entities;
 
+import com.devsuperior.clientchallenge.dto.ClientDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +32,14 @@ public class Client {
         this.income = income;
         this.birthDate = birthDate;
         this.children = children;
+    }
+
+    public Client(ClientDTO clientDTO) {
+        this.name = clientDTO.name();
+        this.cpf = clientDTO.cpf();
+        this.income = clientDTO.income();
+        this.birthDate = clientDTO.birthDate();
+        this.children = clientDTO.children();
     }
 
     public Long getId() {
